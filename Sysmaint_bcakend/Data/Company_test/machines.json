@@ -1,0 +1,20 @@
+[
+  {
+    "name": "Chaudiere1",
+    "description": "C'est une chaudiere",
+    "distance": 10,
+    "all_id_task": [
+      "1",
+      "2"
+    ]
+  },
+  {
+    "name": "Chaudiere",
+    "description": "C'est une chaudiere",
+    "distance": 10,
+    "all_id_task": [
+      "1",
+      "2"
+    ]
+  }
+]

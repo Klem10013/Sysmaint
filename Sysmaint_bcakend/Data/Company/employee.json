@@ -1,0 +1,10 @@
+[
+  {
+    "id_count": 234,
+    "address_mail": "test@gmail.com",
+    "name": "Bob dylan",
+    "privilege": 1,
+    "mpd": "abc123",
+    "ability": []
+  }
+]
