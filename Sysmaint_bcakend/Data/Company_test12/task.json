@@ -1,1 +1,38 @@
-[]
+[
+  {
+    "name": "Check liking",
+    "description": "No description",
+    "time_duration": 60,
+    "machine_link_id": "Radiateur",
+    "status": "free",
+    "time_bet": 1,
+    "last_check": "2024-03-14T14:06:56.113Z"
+  },
+  {
+    "name": "Check termosta",
+    "description": "No description",
+    "time_duration": 60,
+    "machine_link_id": "Radiateur",
+    "status": "free",
+    "time_bet": 1,
+    "last_check": "2024-03-14T14:06:37.174Z"
+  },
+  {
+    "name": "Clean Filter",
+    "description": "No description",
+    "time_duration": 60,
+    "machine_link_id": "Clime",
+    "status": "free",
+    "time_bet": 5,
+    "last_check": "2024-04-09T14:05:56.022Z"
+  },
+  {
+    "name": "Check filter",
+    "description": "No description",
+    "time_duration": 60,
+    "machine_link_id": "Clime",
+    "status": "free",
+    "time_bet": 20,
+    "last_check": "2024-03-14T14:05:33.924Z"
+  }
+]

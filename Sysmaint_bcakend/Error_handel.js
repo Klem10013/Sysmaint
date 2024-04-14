@@ -18,6 +18,8 @@ const PRIVILEGE_ERR = -1;
 const OWNER = 1;
 const MANGER = 2;
 const WORKER = 3;
+const FREE = "free";
+const TAKEN = "taken";
 
 module.exports = {
     WRONG_COMPANY,
@@ -40,6 +42,8 @@ module.exports = {
     PRIVILEGE_NOT_HIGH_ENOUGH,
     PRIVILEGE_HIGH_ENOUGH,
     WRONG_MACHINE,
+    FREE,
+    TAKEN,
 };
 
 const debug = require("./Debug");

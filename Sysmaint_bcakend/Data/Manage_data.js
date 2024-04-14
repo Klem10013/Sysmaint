@@ -38,7 +38,7 @@ async function create_company(company_name, owner) {
         const status = await create_user(company_name, owner);
         const Err = ErrHand.check_error(status)
         if (Err[0]) {
-            return owner;
+            return JSON.stringify(owner);
         } else {
             return status;
         }
@@ -67,6 +67,97 @@ async function create_machine(machine,user)
     debug.debug("Machine Creation")
     debug.debug("company_id = " + user.id_company);
     return await add_data(user.id_company, MACHINES, machine);
+}
+
+
+//#########################################################################
+//Create Calender
+//#########################################################################
+
+async function create_calendar(company_id)
+{
+    debug.debug("Creation Company Start with company "+company_id );
+    const All_employee = await readDataRout(path.join(company_id,EMPLOYEE));
+    const All_Worker = await All_employee.filter((employee) => employee.privilege === ErrHand.WORKER);
+    const All_machine = await readDataRout(path.join(company_id,MACHINES));
+    const All_task = await readDataRout(path.join(company_id,TASK));
+    debug.debug("All worker length : " + All_Worker.length);
+    debug.debug("All machine length : " + All_machine.length);
+    debug.debug("All task length : " + All_task.length);
+    const today_Date_value = new Date().valueOf();
+
+
+    const calendar = []
+    for (let i = 0;i<All_Worker.length;i++)
+    {
+        const employee = All_Worker[i]
+        const worker = {
+            name : All_Worker[i].name,
+            task_name : [],
+            task_start : [],
+            task_end : []
+        }
+        let Start_Time = employee.start
+        let End_Time = 12*60;
+        for (let j = 0; j < All_machine.length; j++) {
+
+
+
+
+            const machine = All_machine[j]
+            let Start_Time_machine = Start_Time + machine.distance;
+            const Task_S = [Start_Time]
+            const Task_E = [Start_Time_machine]
+            const Task_N = ["Drive"]
+            Start_Time_machine += employee.break_p
+            debug.debug("Machine distance = "+ employee.break_p);
+            for (let k = 0; k < machine.all_id_task.length; k++) {
+                const task = await All_task.find((task) => task.name === machine.all_id_task[k]);
+
+                if (task.status === ErrHand.FREE) {
+
+                    const Last_check = new Date(task.last_check).valueOf();
+                    const Time_Sep = new Date(3600 * 24 * 1000 * task.time_bet);
+                    const diff = (today_Date_value - Last_check) - Time_Sep;
+                    if (diff > 0) {
+                        debug.debug("Task name = "+ task.name+ " task duration " + (task.time_duration + Start_Time_machine))
+                        if (task.time_duration + Start_Time_machine >= End_Time)
+                        {
+                            Start_Time_machine += 2*60
+                            End_Time = employee.end
+                        }
+                        if ((task.time_duration + Start_Time_machine) <= End_Time) {
+
+                            Task_S.push(Start_Time_machine)
+                            Task_E.push(Start_Time_machine+task.time_duration)
+                            Task_N.push(task.name);
+                            task.status = ErrHand.TAKEN;
+                            Start_Time_machine = Start_Time_machine+task.time_duration+employee.break_p
+                        }
+                    }
+                }
+            }
+            Task_S.push(Start_Time_machine)
+            Task_E.push(Start_Time_machine+machine.distance)
+            Task_N.push("Drive back");
+            if (Task_S.length > 2) {
+                worker.task_end = worker.task_end.concat(Task_E)
+                worker.task_start = worker.task_start.concat(Task_S)
+                worker.task_name = worker.task_name.concat(Task_N)
+                Start_Time = Start_Time_machine;
+            }
+        }
+        calendar.push([worker])
+    }
+    await write_file(path.join(dataPath,company_id),CALENDAR,JSON.stringify(calendar));
+    return JSON.stringify(calendar);
+}
+
+
+async function get_calendar(user)
+{
+    const All_calendar = await readDataRout(path.join(user.id_company,CALENDAR));
+    return All_calendar.find((user_c)=> user_c.name === user.name)
 }
 
 
@@ -302,3 +393,5 @@ module.exports.create_user = create_user;
 module.exports.createCompany = create_company;
 module.exports.create_machine = create_machine;
 module.exports.create_task = create_task;
+module.exports.create_calendar = create_calendar;
+module.exports.get_calendar = get_calendar;

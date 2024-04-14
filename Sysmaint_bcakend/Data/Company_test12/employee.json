@@ -1,1 +1,17 @@
-[{"name":"Paule test","address":"test@gmail.com","privilege":1,"pwd":"b908f6f0-eae3-4111-822f-16d74b919b74"}]
+[
+  {
+    "name": "Quentin test",
+    "address": "test@gmail.com",
+    "privilege": 3,
+    "start": 510,
+    "end": 1080,
+    "break_p": 5,
+    "pwd": "c9f035bb-062d-4632-81c6-894962ac0500"
+  },
+  {
+    "name": "Paule test",
+    "address": "test@gmail.com",
+    "privilege": 1,
+    "pwd": "72ab13af-1f56-4939-bc0e-f1bd9c42489b"
+  }
+]

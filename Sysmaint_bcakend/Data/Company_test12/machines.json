@@ -1,1 +1,20 @@
-[]
+[
+  {
+    "name": "Radiateur",
+    "description": "This machine is a Radiateur ",
+    "distance": 10,
+    "all_id_task": [
+      "Check termosta",
+      "Check liking"
+    ]
+  },
+  {
+    "name": "Clime",
+    "description": "This machine is a climatiseur ",
+    "distance": 10,
+    "all_id_task": [
+      "Check filter",
+      "Clean Filter"
+    ]
+  }
+]

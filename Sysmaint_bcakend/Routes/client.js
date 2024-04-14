@@ -49,6 +49,9 @@ router.post("/add", async (req, res, _next) => {
                 name: req.body.name_add,
                 address: req.body.address_add,
                 privilege: req.body.privilege_add,
+                start : 8.5*60,
+                end : 18*60,
+                break_p : 5,
                 pwd: create_mdp(1),
             };
             const status = await dml.create_user(req.body.id_company_add, user);

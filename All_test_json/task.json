@@ -1,0 +1,9 @@
+{
+  "name" : "Alice Owner",
+  "id_company" : "Company_test",
+  "token" : "The token that you obtain after the connection",
+
+  "task_name" : "Check for leaks",
+  "time_bet" : 2,
+  "machine_link_id" : "Radiator"
+}

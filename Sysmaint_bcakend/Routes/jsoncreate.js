@@ -27,5 +27,6 @@ const task =
     time_duration : 5, //This indicates the approximate duration of the task in minutes.
     machine_link_id : 3202, //This is the machine ID for which this task needs to be completed.
     status : "in progress", //the status can have 4 states : future/in progress/done/not finish
-    time_bet : 365 //This indicates the interval between each occurrence of when the task needs to be done, measured in days.
+    time_bet : 365, //This indicates the interval between each occurrence of when the task needs to be done, measured in days.
+    last_check: "dd/mm/yyyy"
 }
