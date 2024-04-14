@@ -159,7 +159,7 @@ curl -X POST -H "Content-Type: application/json" -d "@./All_test_json/Add_task.j
 This methode return the Calendar of one employee 
 
 >[!CAUTION]
->to use this methode you should create and connect an worker that has the privilege 3 because the owner or a manager does not have maintenance to do  
+>If you use a user that is not a worker the data base will return all the Calendar and if you are a user it will return only your calendar
 
 ```plaintext
 POST /task/add
@@ -168,17 +168,13 @@ POST /task/add
 Get Calendar request:
 
 ```shell
-curl -X POST -H "Content-Type: application/json" -d "@./All_test_json/Add_task.json" http://localhost:3001/task/add
+curl -X POST -H "Content-Type: application/json" -d "@./All_test_json/Get_calendar.json" http://localhost:3001/calendar/get
 ```
 ```json
 {
-  "name" : "Alice Owner",
-  "id_company" : "Company_test",
-  "token" : "The token that you obtain after the connection",
-
-  "task_name" : "Check for leaks",
-  "time_bet" : 2,
-  "machine_link_id" : "Radiator"
+    "name" : "Alice Owner",
+    "id_company" : "Company_test",
+    "token" : "The token that you obtain after the connection"
 }
 ```
 
