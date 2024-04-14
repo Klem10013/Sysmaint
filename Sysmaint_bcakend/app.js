@@ -15,5 +15,7 @@ app.use(express.json());
 app.use("/client",require("./routes/client"));
 app.use("/machines",require("./routes/machines"));
 app.use("/create_company",require("./routes/company"));
+app.use("/task",require("./routes/task"))
+app.use("/calendar",require("./Routes/calendar"))
 
 app.listen(3001)

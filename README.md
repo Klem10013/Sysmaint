@@ -84,7 +84,7 @@ backend/fronend implementation of an app
         }
 
 
-    Modify user
+    Modify MaMachinee
         Methode post (body in Json)
         {
             user_name : "The User name of the Employee that want ot modify the Machine",
@@ -96,7 +96,7 @@ backend/fronend implementation of an app
         }
 
 
-    Delet User
+    Delet Machine
         Methode post (body in Json)
         {
             user_name : "The User name of the Employee that want ot delet an Machine",
@@ -110,6 +110,13 @@ backend/fronend implementation of an app
 
 
 
+<h3>Calendar :</h3>
 
+    Get the Calendar
+    Methode Get (body in Json)
+    {
+        user_name : "The user name of the user that want to get his calendar"
+        token : "The token of the user that want to get his calendar"
+    }
 
 

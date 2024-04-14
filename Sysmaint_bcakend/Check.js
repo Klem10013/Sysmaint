@@ -9,6 +9,9 @@ async function Can_User_do(user,privilege_min)
     {
         return ErrHand.ACTION_ERROR;
     }
+    if (user.name === undefined || user.id_company === undefined || user.token === undefined) {
+        return ErrHand.USER_DATA_MISSING;
+    }
     const status_connect = await dml.is_connected(user);
     const Err_connect = ErrHand.check_error(status_connect);
     if (!Err_connect[0])
@@ -18,9 +21,6 @@ async function Can_User_do(user,privilege_min)
     if (privilege_min === undefined)
     {
         return ErrHand.PRIVILEGE_ERR;
-    }
-    if (user.name === undefined || user.id_company === undefined || user.token === undefined) {
-        return ErrHand.USER_DATA_MISSING;
     }
     const status = await dml.what_privilege(user)
     const Err = ErrHand.check_error(status)

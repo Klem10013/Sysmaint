@@ -11,6 +11,7 @@ const dataPath = path.join(rootPath, "Data");
 const MACHINES = "machines.json";
 const EMPLOYEE = "employee.json"
 const TASK = "task.json";
+const CALENDAR = "calendar.json"
 
 
 //#########################################################################
@@ -28,9 +29,11 @@ async function create_company(company_name, owner) {
     try {
         await fs.mkdirSync(company_path);
 
+        await write_file(company_path, CALENDAR);
         await write_file(company_path, EMPLOYEE);
         await write_file(company_path, MACHINES);
         await write_file(company_path, TASK);
+
 
         const status = await create_user(company_name, owner);
         const Err = ErrHand.check_error(status)
@@ -64,6 +67,49 @@ async function create_machine(machine,user)
     debug.debug("Machine Creation")
     debug.debug("company_id = " + user.id_company);
     return await add_data(user.id_company, MACHINES, machine);
+}
+
+
+//#########################################################################
+//Task creation function
+//#########################################################################
+async function create_task(task,user)
+{
+    debug.debug("Task Creation")
+    debug.debug("company_id = " + user.id_company);
+    const All_Machine = await readDataRout(path.join(user.id_company, MACHINES));
+    const Machine = All_Machine.findIndex((machine) => machine.name === task.machine_link_id)
+    if (Machine === -1)
+    {
+        return ErrHand.WRONG_MACHINE;
+    }
+    return await add_data_task(user.id_company, TASK, task,All_Machine,Machine);
+}
+
+async function add_data_task(company_id,filename,data,All_Machine,ID)
+{
+    const company_path = path.join(dataPath,company_id)
+    if (!fs.existsSync(company_path)) {
+        return ErrHand.WRONG_COMPANY;
+    }
+
+    // add data to the company
+    const olderData = await readDataRout(path.join(company_id, filename));
+    if (olderData === undefined) {
+        return ErrHand.WRONG_COMPANY;
+    }
+    let i = 1;
+    let name = data.name;
+    while (olderData.find((old_data) => old_data.name === name) !== undefined) {
+        name = data.name + i.toString();
+        i += 1;
+    }
+    data.name = name;
+    All_Machine[ID].all_id_task.push(data.name)
+    const allData = [data, ...olderData];
+    await write_file(company_path, filename, JSON.stringify(allData))
+    await write_file(company_path,MACHINES,JSON.stringify(All_Machine))
+    return ErrHand.ACTION_GOOD
 }
 
 //#########################################################################
@@ -255,3 +301,4 @@ module.exports.what_privilege = what_privilege;
 module.exports.create_user = create_user;
 module.exports.createCompany = create_company;
 module.exports.create_machine = create_machine;
+module.exports.create_task = create_task;

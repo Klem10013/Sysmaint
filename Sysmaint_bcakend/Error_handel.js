@@ -1,3 +1,4 @@
+const WRONG_MACHINE = -17;
 const PRIVILEGE_HIGH_ENOUGH = -16;
 const PRIVILEGE_NOT_HIGH_ENOUGH = -15;
 const USER_DATA_MISSING = -14;
@@ -38,6 +39,7 @@ module.exports = {
     USER_DATA_MISSING,
     PRIVILEGE_NOT_HIGH_ENOUGH,
     PRIVILEGE_HIGH_ENOUGH,
+    WRONG_MACHINE,
 };
 
 const debug = require("./Debug");
@@ -104,6 +106,9 @@ function check_error(message) {
     } else if (message === PRIVILEGE_HIGH_ENOUGH) {
         debug.debug("PRIVILEGE_HIGH_ENOUGH");
         return [true, "User PRIVILEGE are high enough"]
+    } else if (message === WRONG_MACHINE) {
+        debug.debug("WRONG_MACHINE");
+        return [false, "User try to use a wrong machine"]
     }
 }
 
