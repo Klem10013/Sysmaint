@@ -1,0 +1,184 @@
+{
+	"info": {
+		"_postman_id": "ac355af3-dee4-4796-b9fe-919ff38ae126",
+		"name": "Back_end",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "18773550"
+	},
+	"item": [
+		{
+			"name": "http://localhost:3001/create_company/create_company",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"name\": \"Alice Test\",\r\n  \"id_company\":\"Company_test1\",\r\n  \"address\": \"test@gmail.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3001/create_company/create_company",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"create_company",
+						"create_company"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:3001/client/connect",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Alice Owner\",\r\n    \"id_company\": \"Company_test1\",\r\n    \"pwd\": \"the pwd that you obtain after doing the create company command\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3001/client/connect",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"client",
+						"connect"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:3001/client/add",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"name\" : \"Alice Owner\",\r\n  \"id_company\" : \"Company_test1\",\r\n  \"token\" : \"The token that you obtain after the connection\",\r\n\r\n  \"name_add\": \"Bob B\",\r\n  \"address_add\": \"test@gmail.com\",\r\n  \"id_company_add\": \"Company_test1\",\r\n  \"privilege_add\": 3\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3001/client/add",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"client",
+						"add"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:3001/machines/add",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"name\" : \"Alice Owner\",\r\n  \"id_company\" : \"Company_test1\",\r\n  \"token\" : \"The token that you obtain after the connection\",\r\n\r\n  \"machine_name\" : \"Radiator\",\r\n  \"description\" : \"This machine is on the front wall when you enter the hall \",\r\n  \"distance\" : 10\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3001/machines/add",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"machines",
+						"add"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:3001/task/add",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"name\" : \"Alice Owner\",\r\n  \"id_company\" : \"Company_test1\",\r\n  \"token\" : \"The token that you obtain after the connection\",\r\n\r\n  \"task_name\" : \"Check for leaks\",\r\n  \"time_bet\" : 2,\r\n  \"machine_link_id\" : \"Radiator\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3001/task/add",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"task",
+						"add"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:3001/calendar/get",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\" : \"Alice Owner\",\r\n    \"id_company\" : \"Company_test1\",\r\n    \"token\" : \"The token that you obtain after the connection\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3001/calendar/get",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"calendar",
+						"get"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
