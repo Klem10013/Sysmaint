@@ -36,3 +36,54 @@
     transform: rotate(360deg);
   }
 }
+
+
+.darker_background {
+  background-color: #5356FF;
+  color: #DFF5FF; /* This will ensure text inside the div is visible */
+  padding: 20px; /* Adding some padding for better readability */
+}
+
+.dark_background {
+  background-color: #378CE7;
+  color: #DFF5FF; /* This will ensure text inside the div is visible */
+  padding: 20px; /* Adding some padding for better readability */
+}
+
+.light_background {
+  background-color: rgba(103, 198, 227, 1);
+  color: #DFF5FF; /* This will ensure text inside the div is visible */
+  padding: 20px; /* Adding some padding for better readability */
+}
+
+.light_background_gradiant_bot {
+
+  /*background-color: linear-gradient(#67C6E3,#378CE7);*/
+  background: linear-gradient(rgb(55, 140, 231),rgba(103, 198, 227, 1));
+  color: #DFF5FF; /* This will ensure text inside the div is visible */
+  padding: 20px; /* Adding some padding for better readability */
+}
+.light_background_gradiant_top {
+
+  /*background-color: linear-gradient(#67C6E3,#378CE7);*/
+  background: linear-gradient(rgba(103, 198, 227, 1),rgb(55, 140, 231));
+  color: #DFF5FF; /* This will ensure text inside the div is visible */
+  padding: 20px; /* Adding some padding for better readability */
+}
+
+.image-div {
+  height: 100%; /* Set the height to fill the parent container */
+}
+
+.image-div img {
+  width: 100%; /* Ensure the image fills the entire width of its parent container */
+  height: 100%; /* Ensure the image fills the entire height of its parent container */
+  object-fit: cover; /* Maintain aspect ratio while covering the entire container */
+}
+
+.rounded-div {
+  border: 0px;
+  border-radius: 10%; /* Adjust the value to control the roundness of the corners */
+  background-color: lightblue; /* Example background color */
+  padding: 20px; /* Add padding for content inside the div */
+}

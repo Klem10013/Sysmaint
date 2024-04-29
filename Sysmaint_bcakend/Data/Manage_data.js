@@ -106,9 +106,9 @@ async function create_calendar(company_id)
 
             const machine = All_machine[j]
             let Start_Time_machine = Start_Time + machine.distance;
-            const Task_S = [Start_Time]
-            const Task_E = [Start_Time_machine]
-            const Task_N = ["Drive"]
+            let Task_S = [Start_Time]
+            let Task_E = [Start_Time_machine]
+            let Task_N = ["Drive"]
             Start_Time_machine += employee.break_p
             debug.debug("Machine distance = "+ employee.break_p);
             for (let k = 0; k < machine.all_id_task.length; k++) {
@@ -123,7 +123,15 @@ async function create_calendar(company_id)
                         debug.debug("Task name = "+ task.name+ " task duration " + (task.time_duration + Start_Time_machine))
                         if (task.time_duration + Start_Time_machine >= End_Time)
                         {
+
                             Start_Time_machine += 2*60
+                            if (Task_S.length === 1)
+                            {
+                                Task_S = [Start_Time_machine]
+                                Task_E = [Start_Time_machine+machine.distance]
+                                Start_Time_machine += machine.distance+employee.break_p
+                                Task_N = ["Drive"]
+                            }
                             End_Time = employee.end
                         }
                         if ((task.time_duration + Start_Time_machine) <= End_Time) {
@@ -144,7 +152,8 @@ async function create_calendar(company_id)
                 worker.task_end = worker.task_end.concat(Task_E)
                 worker.task_start = worker.task_start.concat(Task_S)
                 worker.task_name = worker.task_name.concat(Task_N)
-                Start_Time = Start_Time_machine;
+                Start_Time = Start_Time_machine+machine.distance ;
+                Start_Time += employee.break_p
             }
         }
         calendar.push([worker])
@@ -200,7 +209,7 @@ async function add_data_task(company_id,filename,data,All_Machine,ID)
     const allData = [data, ...olderData];
     await write_file(company_path, filename, JSON.stringify(allData))
     await write_file(company_path,MACHINES,JSON.stringify(All_Machine))
-    return ErrHand.ACTION_GOOD
+    return data
 }
 
 //#########################################################################

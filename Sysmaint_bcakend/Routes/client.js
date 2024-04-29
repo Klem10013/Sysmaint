@@ -20,7 +20,7 @@ router.post("/add", async (req, res, _next) => {
         const Err = ErrHand.check_error(status)
         if (!Err[0])
         {
-            res.status(400).send(Err[1])
+            res.status(ErrHand.return_status(Err)).json(ErrHand.return_error(Err))
             return;
         }
         debug.debug(Err[1]);
@@ -58,9 +58,9 @@ router.post("/add", async (req, res, _next) => {
             const Err = ErrHand.check_error(status)
             if (Err[0]){
                 debug.debug("Client Created" + JSON.stringify(user));
-                res.json(JSON.stringify(user));
+                res.status(ErrHand.return_status(Err)).json(ErrHand.return_error(Err))
             } else {
-                res.status(400).send(Err[1]);
+                res.status(ErrHand.return_status(Err)).json(ErrHand.return_error(Err))
             }
         } catch (e) {
             debug.debug("Error" + e);
@@ -74,7 +74,8 @@ router.post("/add", async (req, res, _next) => {
 router.post("/connect", async (req, res, _next) => {
     debug.debug("Logging asked");
     if (req.body.name === undefined || req.body.id_company === undefined || req.body.pwd === undefined) {
-        res.status(400).send("information insufficient");
+
+        res.status(400).json({"Error ": "information insufficient"});
         return;
     }
     const user =
@@ -99,7 +100,20 @@ router.post("/connect", async (req, res, _next) => {
         res.json(JSON.stringify(user_connect));
 
     } else {
-        res.status(400).send(Err[1]);
+        if (status === ErrHand.USER_ALREADY_CONNECTED)
+        {
+            const user_connect =
+                {
+                    name: req.body.name,
+                    id_company: req.body.id_company,
+                    token: user_connected.find((user) => user.name === req.body.name).token
+
+                };
+            debug.debug(user_connect)
+            res.json(JSON.stringify(user_connect));
+            return;
+        }
+        res.status(400).json({"Error" : Err[1]});
     }
 });
 
@@ -129,7 +143,7 @@ router.post("/list_company", async (req, res, _next) => {
         const All_user = await dml.readClient(user.id_company);
         res.status(200).json(JSON.stringify(All_user));
     } else {
-        res.status(400).send(Err[1]);
+        res.status(ErrHand.return_status(Err)).json(ErrHand.return_error(Err))
     }
 });
 

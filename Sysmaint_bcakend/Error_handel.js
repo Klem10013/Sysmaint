@@ -52,6 +52,29 @@ const debug = require("./Debug");
 //will return the correct message according to the error
 //And if the test pass or not like this
 //(bool // is good or not,string // the message that describe the error
+function return_error(Err) {
+    const Response = {
+        status: "",
+        message: ""
+    }
+    if (Err[0]) {
+        Response.status = "Good";
+    } else {
+        Response.status = "Error";
+    }
+    Response.message = Err[1]
+    return Response
+}
+
+function return_status(Err)
+{
+    if (Err[0])
+    {
+        return 200;
+    }
+    return 400;
+}
+
 
 function check_error(message) {
     if (typeof (message) !== typeof (-1)) {
@@ -117,3 +140,5 @@ function check_error(message) {
 }
 
 module.exports.check_error = check_error;
+module.exports.return_error = return_error;
+module.exports.return_status = return_status;

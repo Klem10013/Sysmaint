@@ -1,0 +1,30 @@
+.container {
+    margin-top: 50px;
+}
+
+.header {
+    font-weight: bold;
+    padding: 5px;
+}
+
+.hour {
+    border-bottom: 1px solid #ccc;
+    padding: 5px;
+}
+
+.hour-container {
+    position: relative;
+    height: 25px; /* Adjust this value as needed */
+}
+
+.event {
+    position: relative;
+    left: 0;
+    width: 100%;
+    background-color: #f8f9fa;
+}
+
+.event-box {
+    border: 1px solid #007bff;
+    background-color: #DFF5FF;
+}
