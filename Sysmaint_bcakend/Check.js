@@ -27,8 +27,8 @@ async function Can_User_do(user,privilege_min)
     if (!Err[0]) {
         return Err[1];
     }
-    if (Err[1] === ErrHand.PRIVILEGE_ERR || !(Err[1] <= privilege_min)) {
 
+    if (Err[1] === ErrHand.PRIVILEGE_ERR || !(Err[1] <= privilege_min)) {
         return ErrHand.PRIVILEGE_NOT_HIGH_ENOUGH;
     }
     else

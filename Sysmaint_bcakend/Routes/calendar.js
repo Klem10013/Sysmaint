@@ -33,14 +33,19 @@ router.post("/get", async (req, res, _next) => {
     }
     const Cal = await dml.create_calendar(req.body.id_company);
     const status2 = await check.Req_check_user_privilege(req, ErrHand.MANGER)
-    const Err2 = ErrHand.check_error(status)
+    const Err2 = ErrHand.check_error(status2)
     if (Err2[0]) {
-        res.status(200).json( JSON.parse(Cal))
+        Response.status= req.body.name;
+        Response.message = Cal;
+        res.status(200).json(Response)
+
         return;
     }
-
-    const Cal2 = await dml.get_calendar(req.body.id_company)
-    res.json(JSON.parse(Cal2))
+    debug.debug(req.body.name)
+    const Cal2 = JSON.parse(Cal).find((cal) => (cal.name === req.body.name));
+    Response.status= req.body.name;
+    Response.message = Cal2;
+    res.status(200).json(Response)
 })
 
 

@@ -1,23 +1,18 @@
 import React from "react";
-import {Cookies, useCookies} from "react-cookie";
 import Navbar from "../Common/NavBar";
-import UserHomePageBody from "./UserHomePageBody";
-import {useNavigate} from "react-router-dom";
+import AddMachinePageBody from "./AddMachinePageBody";
 
 
-function UserHomaPage() {
-
-
+function AddMachinePage(){
     return (<>
         <div>
             <Navbar name={"SysMaint"} links={[{name: "Home", url: "/"},
                 {name: "Add User", url: "/add_user_page"},
-                {name: "Add Machine", url: "/add_machine_page"},
+                {name: "User Page", url: "/user_page"},
                 {name: "Add Task", url: "/add_task_page"}]}/>
-            <UserHomePageBody/>
+            <AddMachinePageBody/>
         </div>
     </>)
 }
 
-
-export default UserHomaPage
+export default AddMachinePage

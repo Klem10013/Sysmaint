@@ -1,5 +1,23 @@
 [
   {
+    "name": "aaa",
+    "address": "Klem10013@free.fr",
+    "privilege": 3,
+    "start": 510,
+    "end": 1080,
+    "break_p": 5,
+    "pwd": "24ed2dd0-5d1f-4b95-9643-24b143308ce0"
+  },
+  {
+    "name": "Clement Bataille",
+    "address": "clement.bataille@epita.fr",
+    "privilege": 3,
+    "start": 510,
+    "end": 1080,
+    "break_p": 5,
+    "pwd": "cc88ce41-3e20-4ed0-a565-9138ad6b2d00"
+  },
+  {
     "name": "Quentin test",
     "address": "test@gmail.com",
     "privilege": 3,

@@ -1,7 +1,7 @@
 import React from "react";
 
 function ImageCard() {
-    let name = "light_background_gradiant_bot"
+    let name = "light_background"
 
     return (
         <>

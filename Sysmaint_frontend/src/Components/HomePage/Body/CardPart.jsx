@@ -1,10 +1,10 @@
 import React from "react";
 
 function CardPart(prop) {
-    let name = "light_background_gradiant_bot"
+    let name = "light_background"
     if (prop.colorgradian)
     {
-        name = "light_background_gradiant_top"
+        name = "light_background"
     }
     return (
         <>

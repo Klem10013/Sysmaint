@@ -1,12 +1,12 @@
 import React from 'react';
-import Navbar from "./NavBar"
+import Navbar from "../Common/NavBar"
 import LoginPageBody from "./LoginPageBody";
 
 function LoginPage() {
 
     return (
         <div>
-            <Navbar name={"SysMaint"}/>
+            <Navbar name={"SysMaint"} links = {[{name: "Home", url: "/"}]}/>
             <LoginPageBody/>
         </div>
     );

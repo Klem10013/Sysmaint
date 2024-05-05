@@ -28,3 +28,8 @@
     border: 1px solid #007bff;
     background-color: #DFF5FF;
 }
+
+.event-box:hover
+{
+    background: #D0DAF0;
+}

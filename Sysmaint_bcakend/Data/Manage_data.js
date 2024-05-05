@@ -60,6 +60,33 @@ async function create_user(company_id, user) {
 
 
 //#########################################################################
+//User get function
+//#########################################################################
+async function get_user(company_id,userc) {
+    debug.debug("User get")
+    debug.debug("company_id = " + company_id);
+    const users = await readDataRout(path.join(company_id, EMPLOYEE));
+    const users_clean = []
+    for(let i = 0;i<users.length;i++)
+    {
+        let pwd = undefined;
+        debug.debug("GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG " + userc.privilege )
+        if (users[i].privilege>=userc.privilege)
+        {
+            pwd = users[i].pwd
+        }
+        const user = {
+            name : users[i].name,
+            privilege : users[i].privilege,
+            pwd : pwd
+        }
+        users_clean.push(user)
+    }
+    return users_clean
+}
+
+
+//#########################################################################
 //Machine creation function
 //#########################################################################
 async function create_machine(machine,user)
@@ -68,6 +95,28 @@ async function create_machine(machine,user)
     debug.debug("company_id = " + user.id_company);
     return await add_data(user.id_company, MACHINES, machine);
 }
+
+
+
+//#########################################################################
+//Machine get function
+//#########################################################################
+async function get_machines(company_id)
+{
+    const machines = await readDataRout(path.join(company_id, MACHINES));
+    const tasks = await readDataRout(path.join(company_id, TASK))
+    for (let m = 0;m<machines.length;m++)
+    {
+        machines[m].tasks = []
+        for (let i = 0;i<machines[m].all_id_task.length;i+=1)
+        {
+            machines[m].tasks.push(tasks.find((task) => (task.name === machines[m].all_id_task[i])))
+        }
+    }
+
+    return machines
+}
+
 
 
 //#########################################################################
@@ -105,10 +154,23 @@ async function create_calendar(company_id)
 
 
             const machine = All_machine[j]
+
+            const drive = {
+                "name": "Drive",
+                "description": "Go to the machine",
+                "time_duration": machine.distance,
+            }
+            const drive_back = {
+                name: "Drive back",
+                description: "Drive back from the machine",
+                time_duration: machine.distance,
+            }
+
+
             let Start_Time_machine = Start_Time + machine.distance;
             let Task_S = [Start_Time]
             let Task_E = [Start_Time_machine]
-            let Task_N = ["Drive"]
+            let Task_N = [drive]
             Start_Time_machine += employee.break_p
             debug.debug("Machine distance = "+ employee.break_p);
             for (let k = 0; k < machine.all_id_task.length; k++) {
@@ -130,7 +192,7 @@ async function create_calendar(company_id)
                                 Task_S = [Start_Time_machine]
                                 Task_E = [Start_Time_machine+machine.distance]
                                 Start_Time_machine += machine.distance+employee.break_p
-                                Task_N = ["Drive"]
+                                Task_N = [drive]
                             }
                             End_Time = employee.end
                         }
@@ -138,7 +200,7 @@ async function create_calendar(company_id)
 
                             Task_S.push(Start_Time_machine)
                             Task_E.push(Start_Time_machine+task.time_duration)
-                            Task_N.push(task.name);
+                            Task_N.push(task);
                             task.status = ErrHand.TAKEN;
                             Start_Time_machine = Start_Time_machine+task.time_duration+employee.break_p
                         }
@@ -147,7 +209,7 @@ async function create_calendar(company_id)
             }
             Task_S.push(Start_Time_machine)
             Task_E.push(Start_Time_machine+machine.distance)
-            Task_N.push("Drive back");
+            Task_N.push(drive_back);
             if (Task_S.length > 2) {
                 worker.task_end = worker.task_end.concat(Task_E)
                 worker.task_start = worker.task_start.concat(Task_S)
@@ -404,3 +466,5 @@ module.exports.create_machine = create_machine;
 module.exports.create_task = create_task;
 module.exports.create_calendar = create_calendar;
 module.exports.get_calendar = get_calendar;
+module.exports.get_machines = get_machines;
+module.exports.get_user = get_user;

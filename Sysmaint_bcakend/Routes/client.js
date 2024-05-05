@@ -27,18 +27,18 @@ router.post("/add", async (req, res, _next) => {
 
 
         if (req.body.name_add === undefined || req.body.address_add === undefined || req.body.privilege_add === undefined || req.body.id_company_add === undefined) {
-            res.status(400).send("New user information needed");
+            res.status(400).send({message : "New user information needed"});
             debug.debug("User Creation aboard");
             return;
         }
         if (req.body.privilege_add <= ErrHand.OWNER) {
-            res.status(400).send("User privilege are not possible")
+            res.status(400).send({message : "User privilege are not possible"})
             debug.debug("User creation aboard")
             return;
         }
         if (req.body.id_company_add !== req.body.id_company)
         {
-            res.status(400).send("User has not the permission to add in this company")
+            res.status(400).send({message :"User has not the permission to add in this company"})
             debug.debug("User creation aboard")
             return;
         }
@@ -146,5 +146,30 @@ router.post("/list_company", async (req, res, _next) => {
         res.status(ErrHand.return_status(Err)).json(ErrHand.return_error(Err))
     }
 });
+
+router.post("/get", async (req,res,_next) => {
+    debug.debug("List user asked");
+    let status = await check.Req_check_user_privilege(req,ErrHand.WORKER)
+    let Err = ErrHand.check_error(status)
+    if (!Err[0])
+    {
+        res.status(ErrHand.return_status(Err)).json(ErrHand.return_error(Err))
+        return;
+    }
+    debug.debug(Err[1]);
+
+    const user = {
+        name: req.body.name,
+        id_company: req.body.id_company,
+        token: req.body.token,
+    }
+    const status2 = await dml.what_privilege(user)
+    const Err2 = ErrHand.check_error(status)
+    user.privilege = status2
+
+    status = await dml.get_user(req.body.id_company,user)
+    Err = ErrHand.check_error(status)
+    res.status(ErrHand.return_status(Err)).json(ErrHand.return_error(Err))
+})
 
 module.exports = router;

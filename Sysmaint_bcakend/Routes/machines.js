@@ -24,13 +24,19 @@ router.post("/add", async (req, res, _next) => {
         res.status(400).send("New machine information needed");
         return;
     }
+    const machine = {
+        name: req.body.machine_name ,
+        description: req.body.description,
+        distance: req.body.distance,
+        all_id_task: [],
+    };
     if (req.body.description === undefined)
     {
-        req.body.description = "No description"
+        machine.description = "No description"
     }
     if (req.body.distance === undefined)
     {
-        req.body.distance = 0;
+        machine.distance = 0;
     }
     try {
         const machine = {
@@ -59,6 +65,25 @@ router.post("/add", async (req, res, _next) => {
 
 
 });
+
+
+router.post("/get",async (req,res,_next) => {
+    debug.debug("Get all machines asked");
+    let status = await check.Req_check_user_privilege(req,ErrHand.WORKER)
+    let Err = ErrHand.check_error(status)
+    if (!Err[0])
+    {
+        res.status(ErrHand.return_status(Err)).json(ErrHand.return_error(Err))
+        return;
+    }
+    debug.debug(Err[1]);
+
+    status = await dml.get_machines(req.body.id_company)
+    Err = ErrHand.check_error(status)
+    res.status(ErrHand.return_status(Err)).json(ErrHand.return_error(Err))
+
+
+} )
 
 
 module.exports = router;

@@ -4,6 +4,7 @@ import {useCookies} from "react-cookie";
 import "./Calendar.css"
 import { Container, Row, Col } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import PopUptask from "./PopUptask";
 
 function Calendar() {
 
@@ -16,6 +17,20 @@ function Calendar() {
         company: cookies.user.id_company,
         token: cookies.user.token
     }
+
+    const [showPopup, setShowPopup] = useState(false);
+    const [selectedProduct, setSelectedProduct] = useState(null);
+    const handleClickTask = (task) =>
+    {
+        setSelectedProduct(task);
+        setShowPopup(true);
+    }
+
+    const handleClosePopup = () => {
+        setShowPopup(false);
+    };
+
+
     const redirectToLogPage = () => {
         history('/login'); // Redirects to the '/login' route
     };
@@ -27,21 +42,24 @@ function Calendar() {
         }).then((response) => {
             if (response.ok) {
                 response.json().then((data) => {
-                    console.log(data[0][0])
-                    setCalendar_array(data[0][0])
-                    const cal = data[0][0]
-                    console.log(cal.task_name)
-                    const ev = []
-                    for (let i = 0; i<cal.task_name.length;i++)
-                    {
-                        const event = {
-                            start : cal.task_start[i]/30 - 12,
-                            end : cal.task_end[i]/30 - 12,
-                            title : cal.task_name[i]
+                    console.log(data)
+                    setCalendar_array({name : data.status})
+                    if (data.message !== undefined){
+                        const ca = JSON.parse(data.message)
+                        setCalendar_array(ca[0][0])
+                        const cal = ca[0][0]
+                        console.log(data.message[0])
+                        const ev = []
+                        for (let i = 0; i < cal.task_name.length; i++) {
+                            const event = {
+                                start: cal.task_start[i] / 30 - 12,
+                                end: cal.task_end[i] / 30 - 12,
+                                title: cal.task_name[i]
 
+                            }
+                            ev.push(event)
+                            setEvents(ev)
                         }
-                        ev.push(event)
-                        setEvents(ev)
                     }
                 })
             } else {
@@ -86,18 +104,20 @@ function Calendar() {
                 <Col className={"col-10"}>
                     <div key={"title_event"} className="header">Task of the day for {calendar_array.name}</div>
                     {events.map(event => {
-                        console.log(event)
                         const height = (event.end - event.start) * size_time
                         const top = event.start * size_time - 4 - move
                         const fontsize = font_size_min+1/((font_size_max-font_size_min)*(1/height))*font_size_min
                         move += top + height;
-                        return <div key={event.title + event.start} className={"event-box"} style={{height: height, marginTop: top}}>
-                            <div style={{display: 'flex',  justifyContent:'center', alignItems:'center'}}> <h1 style={{fontSize:fontsize}}> {event.title}</h1>
+                        return <div key={event.title.name + event.start} className={"event-box"} style={{height: height, marginTop: top}} onClick={() => handleClickTask(event.title)}>
+                            <div style={{display: 'flex',  justifyContent:'center', alignItems:'center'}}> <h1 style={{fontSize:fontsize}}> {event.title.name}</h1>
                             </div>
                         </div>
                     })}
                 </Col>
             </Row>
+            {showPopup && (
+                <PopUptask product={selectedProduct} onHide={handleClosePopup} />
+            )}
         </Container>
     );
 }
