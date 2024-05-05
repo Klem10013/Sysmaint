@@ -4,6 +4,20 @@
 > in the unicorn univesity 
 > backend/fronend implementation of an app
 
+>[!TIP]
+> To use the Application you need 
+> to start the two app with npm start 
+> in there folder
+
+>[!NOTE]
+> To connect to the owner you can use the use :
+> companyid : Company_test12
+> User name : Paule test
+> password : 72ab13af-1f56-4939-bc0e-f1bd9c42489b
+
+
+
+
 
 >[!TIP]
 >
